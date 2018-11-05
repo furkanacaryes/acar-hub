@@ -1,0 +1,33 @@
+
+body {
+    margin: 0;
+    background-color: #222;
+    color: #fff;
+    font-family: monospace;
+}
+
+.login {
+    padding: 16px 32px;
+    margin: 16px;
+    border-radius: 6px;
+    background-color: #ffcf40;
+    color: #222;
+    box-shadow: 0 10px 70px 10px #111;
+}
+
+#notification-stack {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 200px;
+    height: 100vh;
+}
+
+.notification {
+    margin: 8px 16px;
+    padding: 16px 32px;
+    border-radius: 6px;
+    box-shadow: 0 10px 70px 10px #111;
+    background-color: #191919;
+}
+
