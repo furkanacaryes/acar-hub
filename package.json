@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./index.js -x babel-node -e js",
-    "heroku:start": "node ./index.js -x babel-node -e js",
+    "heroku:start": "node ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Furkan ACAR",
