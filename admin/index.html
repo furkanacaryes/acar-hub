@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Hub</title>
+    <link rel="stylesheet" href="/resources/admin/admin.css">
+</head>
+
+
+<body>
+    <section id="panel">
+        <input type="text" id="title-input" placeholder="Title">
+        <input type="text" id="message-input" placeholder="Message">
+
+        <label for="with-buttons">
+            <input type="checkbox" id="with-buttons">
+            <span>With Buttons</span>
+        </label>
+
+        <div id="response-inputs">
+            <div class="input-group">
+                <input type="text" class="response-text" placeholder="Accept">
+                <input type="text" class="response-value" placeholder="Value">
+            </div>
+            <div class="input-group">
+                <input type="text" class="response-text" placeholder="Decline">
+                <input type="text" class="response-value" placeholder="Value">
+            </div>
+        </div>
+
+        <input type="button" id="publish-button" value="Publish">
+    </section>
+
+    <section id="user-stack">
+        <div class="active-user">
+            <div class="uid">Sample</div>
+            <div>Wed Nov 07 2018 22:30:35</div>
+        </div>
+    </section>
+</body>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/resources/admin/admin.js"></script>
+</html>

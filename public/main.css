@@ -1,33 +1,109 @@
 
 body {
     margin: 0;
-    background-color: #222;
-    color: #fff;
+    padding: 16px;
     font-family: monospace;
+    background-color: #292929;
+    color: #fff;
+    display: flex;
+    flex-flow: column;
 }
 
-.login {
+.button {
+    display: block;
     padding: 16px 32px;
-    margin: 16px;
     border-radius: 6px;
-    background-color: #ffcf40;
+    cursor: pointer;
+}
+
+.button--login {
     color: #222;
+    background-color: #ffcf40;
     box-shadow: 0 10px 70px 10px #111;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.button--notification {
+    color: #ffcf40;
+    border: 1px solid #ffcf40;
+    padding: 8px 0;
+    text-align: center;
+    flex: 1 1 auto;
+}
+
+.button--notification:last-child {
+    margin-left: 16px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
+}
+
+label {
+    margin: 16px 0;
+}
+
+label, .button {
+    max-width: 200px;
+    text-align: center;
+}
+
+input {
+    background-color: #999;
+    border-radius: 8px;
+    color: #222;
+    padding: 16px 32px;
+    outline: none;
+    border: none;
+    font-weight: bold;
 }
 
 #notification-stack {
     position: absolute;
     right: 0;
     bottom: 0;
-    width: 200px;
+    width: 300px;
     height: 100vh;
 }
 
 .notification {
-    margin: 8px 16px;
-    padding: 16px 32px;
+    margin: 16px;
+    padding: 16px 32px 32px;
     border-radius: 6px;
     box-shadow: 0 10px 70px 10px #111;
     background-color: #191919;
+    max-height: 200px;
+    overflow: hidden;
+    animation: reveal 300ms normal ease forwards;
+}
+
+h5 {
+    color: #999;
+    font-weight: bold;
+}
+
+@keyframes reveal {
+    from { opacity: 0 }
+    to   { opacity: 1 }
+}
+
+.leave {
+    animation:
+        leave 300ms normal ease forwards,
+        pocus 300ms normal 300ms ease forwards;
+}
+
+@keyframes leave {
+    from { opacity: 1 }
+    to   { opacity: 0 }
+}
+
+@keyframes pocus {
+    from {  }
+    to   { max-height: 0; padding: 0 32px }
 }
 
