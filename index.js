@@ -2,7 +2,7 @@ const app = require('express')();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 
 app.use(bodyParser.text());
