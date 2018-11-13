@@ -3,7 +3,7 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const mongoDB_URL = 'mongodb://nodejs_02:123qwe@ds052649.mlab.com:52649/nodejs_02';
+const mongoDB_URL = process.env.MONGODB_URL || '<mongodb connection url>';
 const session = mongoose.model('session', {
     user: String,
     client: String,
