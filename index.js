@@ -5,9 +5,9 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const mongoDB_URL = 'mongodb://nodejs_02:123qwe@ds052649.mlab.com:52649/nodejs_02';
 const session = mongoose.model('session', {
-    title: String,
-    message: String,
-    buttons: []
+    user: String,
+    client: String,
+    timeStamp: Date,
 })
 const port = process.env.PORT || 3000;
 
@@ -56,6 +56,16 @@ app.post('/login', (req, res) => {
 
 const notifications = io.of('/notifications');
 
+const sendUsers = adminSocket => {
+    session.find({}, (err, res) => {
+        if(err)
+            return console.log('Couldn\'t Get Users!')
+
+        for(const one of res)
+            adminSocket.emit('session', one)
+    })   
+}
+
 
 notifications.on('connection', socket => {
     console.log('New Connection!');
@@ -76,6 +86,9 @@ notifications.on('connection', socket => {
         socket.join(room);
         console.log(`New Client Joined and Encapsulated as ${room}`);
 
+        if(room === 'admin')
+            return sendUsers(socket)
+        
         const newSession = {
             user: room,
             client: Object.keys(socket.rooms).join(' '),
@@ -85,13 +98,16 @@ notifications.on('connection', socket => {
         // Keep persistent
 
         session.create(newSession, err => {
-            console.log('Session Couldn\'t Save!')
+            if(err)
+                console.log('Session Couldn\'t Save!')
+
+            console.log('Client Saved as ', newSession.client);
         });
 
 
         // Informs Admin Client to make changes on UI
 
-        notifications.emit('session', newSession)
+        notifications.to('admin').emit('session', newSession)
     })
 
 
@@ -112,17 +128,21 @@ notifications.on('connection', socket => {
     })
 
 
+    // NOTE : Disconnect happens even without login
     socket.on('disconnecting', _ => {
-        session.findOneAndDelete({
-            client: Object.keys(socket.rooms).join(' ')},
+        session.deleteOne({
+                client: Object.keys(socket.rooms)[0]
+            },
             err => {
                 if(err)
                     console.log('Couldn\'t Delete!', err)
+
+                console.log('Client Removed : ', Object.keys(socket.rooms)[0])
             })
 
         // Informs Admin Client to make changes on UI
 
-        console.log('Disconnect Raised!');
-        notifications.emit('sessionOver', Object.keys(socket.rooms))
+        notifications.to('admin')
+            .emit('sessionOver', Object.keys(socket.rooms))
     })
 })

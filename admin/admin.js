@@ -1,6 +1,5 @@
 const socket = io.connect('/notifications');
 
-
 const titleInput = document.getElementById('title-input');
 const messageInput = document.getElementById('message-input');
 const withButtons = document.getElementById('with-buttons');
@@ -11,6 +10,7 @@ const userStack = document.getElementById('user-stack');
 let selectedReceivers = [];
 
 
+socket.emit('join', 'admin');
 
 withButtons.addEventListener('change', e => {
     responseInputs[0].parentElement.style
@@ -103,14 +103,20 @@ socket.on('session', session => {
 
 
 socket.on('sessionOver', rooms => {
+    if(rooms[1] === 'admin')
+        return;
+    
+    console.log('Removed Client Rooms were : ', rooms.join(' '))
     const clientID = Array.from(userStack.getElementsByTagName('code'))
         .find(clientID => clientID.innerHTML === rooms[0]);
 
+    // NOTE : Disconnect happens even without login
     if(!clientID)
         return;
 
     userStack.removeChild(clientID.parentElement);
 
+    // Using usernames for rooms
     const uids = Array.from(userStack.getElementsByClassName('uid'))
         .filter(uid => uid.innerHTML === rooms[1])
     
